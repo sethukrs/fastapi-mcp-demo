@@ -18,12 +18,12 @@ This demo shows how to create an MCP server that connects AI assistants to a Fas
 
 ```mermaid
 graph LR
-    A[User] -->|"1. Ask question"| B[AI Assistant]
-    B -->|"2. Request tool"| C[MCP Server]
-    C -->|"3. Call API"| D[FastAPI App]
-    D -->|"4. Return data"| C
-    C -->|"5. Format response"| B
-    B -->|"6. Show answer"| A
+    A[User] -->|"Ask question"| B[AI Assistant]
+    B -->|"Request tool"| C[MCP Server]
+    C -->|"Call API"| D[FastAPI App]
+    D -->|"Return data"| C
+    C -->|"Format response"| B
+    B -->|"Show answer"| A
 ```
 
 ### 🏗️ Real-World Architecture
@@ -127,7 +127,7 @@ graph TD
     A -->|"2. Register Tools"| C[Define Available Tools]
     C -->|"3. List Tools"| D[health_check, search_products]
     E[AI Request] -->|"4. Call Tool"| F[Tool Handler]
-    F -->|"5. Check Tool Type"| G{Which Tool?}
+    F -->|"5. Check Tool Type"| G[Which Tool?]
     G -->|"health_check"| H[GET /health]
     G -->|"search_products"| I[GET /products]
     H -->|"6. Call FastAPI"| J[FastAPI Response]
