@@ -74,11 +74,9 @@ graph TB
 
 ### 🏪 E-commerce Assistant
 Imagine an AI assistant that can:
-- Search your product catalog
-- Check inventory levels
-- Process orders
-- Show user shopping carts
-- Answer customer questions about products
+- 🔍 Search product catalog
+- 🛒 View customer carts
+- 📦 Track inventory
 
 
 ## How to Use This Demo
@@ -98,7 +96,7 @@ Any MCP-compatible AI tool can now:
 - Show user shopping carts
 - Search for products in your catalog
 
-## The Magic Behind the Scenes
+## AI-to-FastAPI Integration Flow
 
 ### FastAPIMCPServer Class
 This is the main class that:
@@ -129,7 +127,7 @@ graph TD
 - `run()` - Starts the MCP server and keeps it running
 
 
-## Steps to demo
+## How to Run the Demo Locally
 
 1. **Install dependencies:**
    ```bash
