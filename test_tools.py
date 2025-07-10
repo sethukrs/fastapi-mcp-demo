@@ -12,14 +12,16 @@ async def test_fastapi_endpoints():
     print("=" * 50)
     
     async with httpx.AsyncClient() as client:
-        # Test health endpoint
-        print("\n--- Testing /health endpoint ---")
+        # Test carts endpoint
+        print("\n--- Testing /carts endpoint ---")
         try:
-            response = await client.get("http://localhost:8000/health")
+            response = await client.get("http://localhost:8000/carts", params={
+                "user_id": 1
+            })
             response.raise_for_status()
-            print(f"✅ Health check successful: {response.json()}")
+            print(f"✅ Carts fetch successful: {response.json()}")
         except Exception as e:
-            print(f"❌ Health check failed: {e}")
+            print(f"❌ Carts fetch failed: {e}")
         
         # Test products endpoint
         print("\n--- Testing /products endpoint ---")

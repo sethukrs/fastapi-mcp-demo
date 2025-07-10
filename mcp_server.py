@@ -6,7 +6,7 @@ import httpx
 from mcp.server import Server
 from mcp.server.models import InitializationOptions
 from mcp.server.stdio import stdio_server
-from mcp.types import CallToolResult, ListToolsResult, Tool, TextContent, ServerCapabilities
+from mcp.types import Tool, TextContent, ServerCapabilities
 
 class FastAPIMCPServer:
     def __init__(self):
@@ -17,12 +17,17 @@ class FastAPIMCPServer:
 
     def _register_tools(self):
         @self.server.list_tools()
-        async def list_tools() -> ListToolsResult:
-            return ListToolsResult(tools=[
+        async def list_tools():
+            return [
                 Tool(
-                    name="health_check",
-                    description="Check FastAPI health endpoint",
-                    inputSchema={"type": "object", "properties": {}}
+                    name="get_carts",
+                    description="Get shopping carts for a user using FastAPI",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "user_id": {"type": "integer"}
+                        }
+                    }
                 ),
                 Tool(
                     name="search_products",
@@ -35,26 +40,23 @@ class FastAPIMCPServer:
                         }
                     }
                 )
-            ])
+            ]
 
         @self.server.call_tool()
-        async def call_tool(name: str, arguments: Dict[str, Any]) -> CallToolResult:
+        async def call_tool(name: str, arguments: Dict[str, Any]):
             try:
-                if name == "health_check":
-                    resp = await self.client.get("http://localhost:8000/health")
+                if name == "get_carts":
+                    resp = await self.client.get("http://localhost:8000/carts", params=arguments)
                 elif name == "search_products":
                     resp = await self.client.get("http://localhost:8000/products", params=arguments)
                 else:
-                    raise ValueError("Unknown tool")
+                    return [TextContent(type="text", text=f"Error: Unknown tool {name}")]
 
                 resp.raise_for_status()
-                return CallToolResult(content=[TextContent(type="text", text=resp.text)])
+                return [TextContent(type="text", text=resp.text)]
 
             except Exception as e:
-                return CallToolResult(
-                    content=[TextContent(type="text", text=f"Error: {str(e)}")],
-                    isError=True
-                )
+                return [TextContent(type="text", text=f"Error: {str(e)}")]
 
     async def run(self):
         async with stdio_server() as (r, w):
