@@ -28,7 +28,7 @@ def demo_mcp_server():
         
         # Check if process is still running
         if process.poll() is None:
-            print("✅ MCP Server started successfully!")
+            print("MCP Server started successfully!")
             print("The server is now ready to accept MCP client connections.")
             print("\nYou can test it with any MCP-compatible client.")
             print("\nTo test manually, you can:")
@@ -38,11 +38,11 @@ def demo_mcp_server():
         else:
             # Get error output
             stderr_output = process.stderr.read() if process.stderr else "No error output available"
-            print("❌ MCP Server failed to start:")
+            print("MCP Server failed to start:")
             print(stderr_output)
             
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
     finally:
         # Clean up
         process.terminate()

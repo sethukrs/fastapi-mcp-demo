@@ -19,9 +19,9 @@ async def test_fastapi_endpoints():
                 "user_id": 1
             })
             response.raise_for_status()
-            print(f"✅ Carts fetch successful: {response.json()}")
+            print(f"Carts fetch successful: {response.json()}")
         except Exception as e:
-            print(f"❌ Carts fetch failed: {e}")
+            print(f"Carts fetch failed: {e}")
         
         # Test products endpoint
         print("\n--- Testing /products endpoint ---")
@@ -31,9 +31,9 @@ async def test_fastapi_endpoints():
                 "catalog_id": 2
             })
             response.raise_for_status()
-            print(f"✅ Products search successful: {response.json()}")
+            print(f"Products search successful: {response.json()}")
         except Exception as e:
-            print(f"❌ Products search failed: {e}")
+            print(f"Products search failed: {e}")
 
 if __name__ == "__main__":
     print("Make sure your FastAPI server is running on port 8000!")
