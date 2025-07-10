@@ -24,34 +24,26 @@ graph LR
     D -->|"4. Return data"| C
     C -->|"5. Format response"| B
     B -->|"6. Show answer"| A
-    
-    style A fill:#e1f5fe
-    style B fill:#fff3e0
-    style C fill:#f3e5f5
-    style D fill:#e8f5e8
 ```
 
 ### 🏗️ Real-World Architecture
 
 ```mermaid
 graph TB
-    subgraph "AI Layer"
+    subgraph AI_Layer
         A1[ChatGPT]
         A2[Claude]
         A3[Custom AI]
     end
-    
-    subgraph "MCP Layer"
+    subgraph MCP_Layer
         B1[MCP Server]
         B2[Tool Registry]
     end
-    
-    subgraph "Application Layer"
+    subgraph Application_Layer
         C1[FastAPI App]
         C2[Database]
         C3[External APIs]
     end
-    
     A1 --> B1
     A2 --> B1
     A3 --> B1
@@ -59,15 +51,6 @@ graph TB
     B1 --> C1
     C1 --> C2
     C1 --> C3
-    
-    style A1 fill:#e1f5fe
-    style A2 fill:#e1f5fe
-    style A3 fill:#e1f5fe
-    style B1 fill:#fff3e0
-    style B2 fill:#fff3e0
-    style C1 fill:#f3e5f5
-    style C2 fill:#f3e5f5
-    style C3 fill:#f3e5f5
 ```
 
 ## Project Structure
@@ -142,31 +125,14 @@ This is the main class that:
 graph TD
     A[FastAPIMCPServer] -->|"1. Initialize"| B[Create HTTP Client]
     A -->|"2. Register Tools"| C[Define Available Tools]
-    
     C -->|"3. List Tools"| D[health_check, search_products]
-    
     E[AI Request] -->|"4. Call Tool"| F[Tool Handler]
     F -->|"5. Check Tool Type"| G{Which Tool?}
-    
     G -->|"health_check"| H[GET /health]
     G -->|"search_products"| I[GET /products]
-    
     H -->|"6. Call FastAPI"| J[FastAPI Response]
     I -->|"6. Call FastAPI"| J
-    
     J -->|"7. Format"| K[Return to AI]
-    
-    style A fill:#fff3e0
-    style B fill:#e1f5fe
-    style C fill:#e1f5fe
-    style D fill:#e8f5e8
-    style E fill:#fff3e0
-    style F fill:#f3e5f5
-    style G fill:#fff3e0
-    style H fill:#f3e5f5
-    style I fill:#f3e5f5
-    style J fill:#e8f5e8
-    style K fill:#e8f5e8
 ```
 
 ### Key Methods:
