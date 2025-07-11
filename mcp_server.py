@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # mcp_server.py
 import asyncio
 from typing import Any, Dict
@@ -7,6 +8,8 @@ from mcp.server import Server
 from mcp.server.models import InitializationOptions
 from mcp.server.stdio import stdio_server
 from mcp.types import Tool, TextContent, ServerCapabilities
+
+import sys
 
 class FastAPIMCPServer:
     def __init__(self):
@@ -26,7 +29,8 @@ class FastAPIMCPServer:
                         "type": "object",
                         "properties": {
                             "user_id": {"type": "integer"}
-                        }
+                        },
+                        "required": ["user_id"]
                     }
                 ),
                 Tool(
@@ -37,7 +41,8 @@ class FastAPIMCPServer:
                         "properties": {
                             "channel_id": {"type": "integer"},
                             "catalog_id": {"type": "integer"}
-                        }
+                        },
+                        "required": ["channel_id", "catalog_id"]
                     }
                 )
             ]
@@ -58,6 +63,9 @@ class FastAPIMCPServer:
             except Exception as e:
                 return [TextContent(type="text", text=f"Error: {str(e)}")]
 
+    async def shutdown(self):
+        await self.client.aclose()
+
     async def run(self):
         async with stdio_server() as (r, w):
             await self.server.run(
@@ -65,9 +73,19 @@ class FastAPIMCPServer:
                 InitializationOptions(
                     server_name="FastAPI-MCP", 
                     server_version="1.0",
-                    capabilities=ServerCapabilities()
+                    capabilities=ServerCapabilities(
+                        tools={}
+                    )
                 )
             )
+        await self.shutdown()
 
 if __name__ == "__main__":
-    asyncio.run(FastAPIMCPServer().run())
+    try:
+        asyncio.run(FastAPIMCPServer().run())
+    except KeyboardInterrupt:
+        print("Server stopped by user", file=sys.stderr, flush=True)
+    except Exception as e:
+        print(f"Startup error: {e}", file=sys.stderr, flush=True)
+        import traceback
+        traceback.print_exc(file=sys.stderr)
