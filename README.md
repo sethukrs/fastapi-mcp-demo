@@ -53,23 +53,6 @@ graph TB
     C1 --> C3
 ```
 
-## Project Structure
-
-### 📁 Files Explained
-
-- **`main.py`** - A simple FastAPI web application with two endpoints:
-  - `/carts` - Returns a list of shopping carts for a user
-  - `/products` - Returns a list of products
-
-- **`mcp_server.py`** - The MCP server that:
-  - Connects to your FastAPI app
-  - Exposes your API endpoints as "tools" that AI can use
-  - Handles communication between AI assistants and your app
-
-- **`demo_client.py`** - A simple script to test if the MCP server starts correctly
-
-- **`test_tools.py`** - Tests the FastAPI endpoints directly to make sure they work
-
 ## Real-World Use Cases
 
 ### 🏪 E-commerce Assistant
@@ -79,31 +62,11 @@ Imagine an AI assistant that can:
 - 📦 Track inventory
 
 
-## How to Use This Demo
-
-### 1. Start the FastAPI Server
-```bash
-uvicorn main:app --reload
-```
-
-### 2. Start the MCP Server
-```bash
-python mcp_server.py
-```
-
-### 3. Connect an AI Assistant
+### Connect an AI Assistant
 Any MCP-compatible AI tool can now:
 - Show user shopping carts
 - Search for products in your catalog
 
-## AI-to-FastAPI Integration Flow
-
-### FastAPIMCPServer Class
-This is the main class that:
-- **Creates the bridge** between AI and your FastAPI app
-- **Registers tools** that AI can use (like `get_carts` and `search_products`)
-- **Translates requests** from AI into HTTP calls to your API
-- **Returns results** back to the AI in a format it understands
 
 ### 🔧 Internal Class Flow
 
@@ -120,34 +83,6 @@ graph TD
     I -->|"Call FastAPI"| J
     J -->|"Format"| K[Return to AI]
 ```
-
-### Key Methods:
-- `_register_tools()` - Defines what actions AI can perform
-- `call_tool()` - Executes the actual API calls when AI requests something
-- `run()` - Starts the MCP server and keeps it running
-
-
-## How to Run the Demo Locally
-
-1. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-2. **Start your FastAPI server:**
-   ```bash
-   uvicorn main:app --reload
-   ```
-
-3. **Test the endpoints:**
-   ```bash
-   python test_tools.py
-   ```
-
-4. **Start the MCP server:**
-   ```bash
-   python mcp_server.py
-   ```
 
 5. **Connect an AI assistant** that supports MCP and start asking questions!
 
